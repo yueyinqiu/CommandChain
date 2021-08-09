@@ -1,0 +1,97 @@
+# messages.yml
+
+messages:
+  help: |
+    &r&3[&bCommandChain&3]:
+    Hello, {senderName}&r&3! Try these commands!
+    &r&b/commandchain chains &r&6(Permission Required: "commandchain.chains")
+    &r&b/commandchain reload &r&6(Permission Required: "commandchain.reload")
+    &r&b/commandchain version &r&6(Permission Required: "commandchain.version")
+  # Available Arg(s): {senderName}.
+
+  chains:
+    help: |
+      &r&3[&bCommandChain&3]:
+      Try these commands!
+      &r&b/commandchain chains execute <chain> <arg1,arg2,...> &r&6-- To execute a command chain.
+      &r&b/commandchain chains print <chain> <arg1,arg2,...> &r&6-- To print a command chain.
+    # Available Arg(s): {senderName}.
+    execute:
+      started: |
+        &r&3[&bCommandChain&3]: Executing {chainName} ...
+      # Available Arg(s): {senderName}, {chainName}.
+      completed: |
+        &r&3[&bCommandChain&3]: {chainName} executed.
+      # Available Arg(s): {senderName}, {chainName}.
+      failed: |
+        &r&3[&bCommandChain&3]: Failed to execute this line: {chainLine}
+      # Available Arg(s): {senderName}, {chainName}, {chainLine}.
+      failed-and-stopped: |
+        &r&3[&bCommandChain&3]: {chainName} stopped. Failed to execute this line: {chainLine}
+      # Available Arg(s): {senderName}, {chainName}, {chainLine}.
+      no-such-chain: |
+        &r&3[&bCommandChain&3]: Cannot find {chainName}.
+      # Available Arg(s): {senderName}, {chainName}.
+    print:
+      list:
+        # The following 3 messages will get jointed together before being sent.
+        # They will be jointed as "{beginning}{line1}{separator}{line2}{separator}...{lineX}{ending}".
+        # The blank characters will be jointed as they are, expect the ones at the beginning of "beginning" and at the end of "ending".
+        beginning: "&r&3[&bCommandChain&3]:\n{chainName} will be executed as these lines:\n"
+        # Available Arg(s): {senderName}, {chainName}.
+        separator: "&r&3\n"
+        # Available Arg(s): {senderName}, {chainName}.
+        ending: "&r&3\nThat's all."
+        # Available Arg(s): {senderName}, {chainName}.
+      no-such-chain: |
+        &r&3[&bCommandChain&3]: Cannot find {chainName}.
+      # Available Arg(s): {senderName}, {chainName}.
+
+  reload:
+    help: |
+      &r&3[&bCommandChain&3]:
+      Try these commands!
+      &r&b/commandchain reload config &r&6-- To reload file 'config.yml'.
+      &r&b/commandchain reload message &r&6-- To reload file 'message.yml'.
+      &r&b/commandchain reload chains &r&6-- To reload the chains.
+      &r&b/commandchain reload all &r&6-- To reload all the files above.
+    # Available Arg(s): {senderName}.
+    config:
+      completed: |
+        &r&3[&bCommandChain&3]: 'config.yml' has been reloaded, but note that the update checker won't be affected.
+      # Available Arg(s): {senderName}.
+    messages:
+      completed: |
+        &r&3[&bCommandChain&3]: 'messages.yml' has been reloaded.
+      # Available Arg(s): {senderName}.
+    chains:
+      completed: |
+        &r&3[&bCommandChain&3]: The chains has been reloaded.
+      # Available Arg(s): {senderName}.
+      invalid-line: |
+        &r&3[&bCommandChain&3]: Cannot resolve the line in {chainName}: {chainLine}
+      # Available Arg(s): {senderName}, {chainName}, {chainLine}.
+
+  version:
+    help: |
+      &r&3[&bCommandChain&3]:
+      Try these commands!
+      &r&b/commandchain version current &r&6-- To get the current version info.
+      &r&b/commandchain version latest &r&6-- To get the latest version info.
+    # Available Arg(s): {senderName}.
+    current:
+      message: |
+        &r&3[&bCommandChain&3]: The current version is '{version}&r&3'.
+      # Available Arg(s): {senderName}, {version}.
+    latest:
+      message: |
+        &r&3[&bCommandChain&3]:
+        The latest version is '{version}&r&3' ({time}&r&3).
+        You may download it at 'https://yueyinqiu.github.io/CommandChain/download'.
+      # Available Arg(s): {senderName}, {version}, {time}.
+      checker-not-enabled: |
+        &r&3[&bCommandChain&3]: The update checker isn't enabled.
+      # Available Arg(s): {senderName}.
+      failed-to-check: |
+        &r&3[&bCommandChain&3]: Failed to check the update.
+      # Available Arg(s): {senderName}.

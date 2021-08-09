@@ -1,0 +1,24 @@
+# plugin.yml
+
+name: CommandChain
+description: Allows you to execute a chain of commands in one command.
+website: https://github.com/yueyinqiu/CommandChain/wiki
+
+version: '0.01'
+author: yueyinqiu5990
+main: top.nololiyt.yueyinqiu.commandchain.CommandChainPlugin
+
+commands:
+  commandchain:
+    description: "All commands for the plugin 'CommandChain'."
+
+permissions:
+  commandchain.chains:
+    description: "Allows one to use '/commandchain chains' and its sub-commands."
+    default: op
+  commandchain.reload:
+    description: "Allows one to use '/commandchain reload' and its sub-commands."
+    default: op
+  commandchain.version:
+    description: "Allows one to use '/commandchain version' and its sub-commands."
+    default: op

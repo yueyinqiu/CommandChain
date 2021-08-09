@@ -1,0 +1,18 @@
+# example.yml
+
+# Please check out our wiki to learn more: https://github.com/yueyinqiu/CommandChain/wiki
+
+go-on-even-failure: true
+execute-permission: 'commandchain.chains.execute.example'
+print-permission: 'commandchain.chains.print.example'
+
+commands:
+  - 'run-command say {0} has put a bomb somewhere!'
+  - 'run-command sudo {0} me {1} it!'
+  - 'run-command say 3'
+  - 'delay {2}'
+  - 'run-command say 2'
+  - 'delay {2}'
+  - 'run-command say 1'
+  - 'delay {2}'
+  - 'run-command say nothing happened lol'
