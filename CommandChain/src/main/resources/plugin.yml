@@ -4,7 +4,7 @@ name: CommandChain
 description: Allows you to execute a chain of commands in one command.
 website: https://github.com/yueyinqiu/CommandChain/wiki
 
-version: '0.01'
+version: '1.00'
 author: yueyinqiu5990
 main: top.nololiyt.yueyinqiu.commandchain.CommandChainPlugin
 

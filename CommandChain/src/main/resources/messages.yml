@@ -13,8 +13,8 @@ messages:
     help: |
       &r&3[&bCommandChain&3]:
       Try these commands!
-      &r&b/commandchain chains execute <chain> <arg1,arg2,...> &r&6-- To execute a command chain.
-      &r&b/commandchain chains print <chain> <arg1,arg2,...> &r&6-- To print a command chain.
+      &r&b/commandchain chains execute <chain> [arg1,arg2,...] &r&6-- To execute a command chain.
+      &r&b/commandchain chains print <chain> [arg1,arg2,...] &r&6-- To print a command chain.
     # Available Arg(s): {senderName}.
     execute:
       started: |
