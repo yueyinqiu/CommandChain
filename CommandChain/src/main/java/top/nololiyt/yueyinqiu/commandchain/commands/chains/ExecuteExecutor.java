@@ -96,11 +96,11 @@ public class ExecuteExecutor extends Executor
                         messagesSender.getArgs()[2] = StringPair.chainLine(s);
                         messagesSender.send(messagesKeyFailedAndStopped);
                     }
+                }, () -> {
+                    messagesSender.getArgs()[2] = null;
+                    messagesSender.send(messageKey.append("completed"));
                 });
     
-        messagesSender.getArgs()[2] = null;
-        messagesSender.send(messageKey.append("completed"));
-        
         return true;
     }
 }

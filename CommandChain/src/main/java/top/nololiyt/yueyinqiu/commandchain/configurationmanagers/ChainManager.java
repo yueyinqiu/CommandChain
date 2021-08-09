@@ -16,6 +16,7 @@ public class ChainManager extends ConfigurationManager
     private boolean goOnEvenFailure;
     
     private String executePermission = null;
+    
     String getExecutePermission()
     {
         if (commands == null)
@@ -24,6 +25,7 @@ public class ChainManager extends ConfigurationManager
     }
     
     private String printPermission = null;
+    
     String getPrintPermission()
     {
         if (commands == null)
@@ -32,6 +34,7 @@ public class ChainManager extends ConfigurationManager
     }
     
     private String chainName;
+    
     String getChainName()
     {
         if (commands == null)
@@ -93,7 +96,8 @@ public class ChainManager extends ConfigurationManager
             CommandSender sender,
             String[] arguments,
             RunnableT<String> runOnFailure,
-            RunnableT<String> runOnFailedAndStopped)
+            RunnableT<String> runOnFailedAndStopped,
+            Runnable runOnCompleted)
     {
         if (commands == null)
             readCommands();
@@ -102,7 +106,8 @@ public class ChainManager extends ConfigurationManager
         {
             List<CommandInChains> copy = new LinkedList<>(commands);
             CommandInChains firstChain = copy.remove(0);
-            firstChain.execute(arguments, copy, goOnEvenFailure, runOnFailure, runOnFailedAndStopped);
+            firstChain.execute(arguments, copy, goOnEvenFailure,
+                    runOnFailure, runOnFailedAndStopped, runOnCompleted);
             return true;
         }
         return false;

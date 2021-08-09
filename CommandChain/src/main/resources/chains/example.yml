@@ -10,6 +10,7 @@ commands:
   - 'run-command minecraft:say {0} has put a bomb somewhere!'
   - 'delay 100'
   - 'run-command minecraft:execute as {0} run me {1} it!'
+  - 'delay 100'
   - 'run-command minecraft:say 3'
   - 'delay {2}'
   - 'run-command minecraft:say 2'

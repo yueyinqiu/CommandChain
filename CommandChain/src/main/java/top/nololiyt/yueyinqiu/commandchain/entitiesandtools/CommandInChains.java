@@ -85,21 +85,30 @@ public class CommandInChains
             List<CommandInChains> myNextCommands,
             boolean goOnEvenFailure,
             RunnableT<String> runOnFailure,
-            RunnableT<String> runOnFailedAndStopped)
+            RunnableT<String> runOnFailedAndStopped,
+            Runnable runOnCompleted)
     {
         if (filledLineIfFailure != null)
         {
             if (goOnEvenFailure)
+            {
                 runOnFailure.run(filledLineIfFailure);
+                CommandInChains nextCommand = myNextCommands.remove(0);
+                nextCommand.execute(arguments, myNextCommands, true,
+                        runOnFailure, runOnFailedAndStopped, runOnCompleted);
+            }
             else
                 runOnFailedAndStopped.run(filledLineIfFailure);
         }
-    
-        if ((goOnEvenFailure || (filledLineIfFailure == null)) && myNextCommands.size() > 0)
+        else if(myNextCommands.size() > 0)
         {
             CommandInChains nextCommand = myNextCommands.remove(0);
             nextCommand.execute(arguments, myNextCommands, goOnEvenFailure,
-                    runOnFailure, runOnFailedAndStopped);
+                    runOnFailure, runOnFailedAndStopped, runOnCompleted);
+        }
+        else
+        {
+            runOnCompleted.run();
         }
     }
     
@@ -108,11 +117,12 @@ public class CommandInChains
             List<CommandInChains> nextCommands,
             boolean goOnEvenFailure,
             RunnableT<String> runOnFailure,
-            RunnableT<String> runOnFailedAndStopped)
+            RunnableT<String> runOnFailedAndStopped,
+            Runnable runOnCompleted)
     {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
                 () -> this.executePrivate(arguments, nextCommands,
-                        goOnEvenFailure, runOnFailure, runOnFailedAndStopped)
+                        goOnEvenFailure, runOnFailure, runOnFailedAndStopped, runOnCompleted)
         );
     }
     
@@ -121,7 +131,8 @@ public class CommandInChains
             List<CommandInChains> nextCommands,
             boolean goOnEvenFailure,
             RunnableT<String> runOnFailure,
-            RunnableT<String> runOnFailedAndStopped)
+            RunnableT<String> runOnFailedAndStopped,
+            Runnable runOnCompleted)
     {
         String filledLine = fillArguments(arguments);
     
@@ -132,12 +143,13 @@ public class CommandInChains
             if (substring.isEmpty())
             {
                 executeNext(filledLine, arguments, nextCommands, true,
-                        runOnFailure, runOnFailedAndStopped);
+                        runOnFailure, runOnFailedAndStopped, runOnCompleted);
                 return;
             }
             Server server = plugin.getServer();
             executeNext(server.dispatchCommand(server.getConsoleSender(), substring) ? null : filledLine,
-                    arguments, nextCommands, goOnEvenFailure, runOnFailure, runOnFailedAndStopped);
+                    arguments, nextCommands, goOnEvenFailure,
+                    runOnFailure, runOnFailedAndStopped, runOnCompleted);
             return;
         }
         else if (loweredLine.startsWith(KEY_WORD_DELAY))
@@ -149,17 +161,17 @@ public class CommandInChains
     
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
                         () -> executeNext(null, arguments, nextCommands, goOnEvenFailure,
-                                runOnFailure, runOnFailedAndStopped),
+                                runOnFailure, runOnFailedAndStopped, runOnCompleted),
                         number);
             }
             catch (NumberFormatException e)
             {
                 executeNext(filledLine, arguments, nextCommands, goOnEvenFailure, runOnFailure,
-                        runOnFailedAndStopped);
+                        runOnFailedAndStopped, runOnCompleted);
             }
             return;
         }
         executeNext(filledLine, arguments, nextCommands,
-                goOnEvenFailure, runOnFailure, runOnFailedAndStopped);
+                goOnEvenFailure, runOnFailure, runOnFailedAndStopped, runOnCompleted);
     }
 }
