@@ -147,7 +147,19 @@ public class CommandInChains
                 return;
             }
             Server server = plugin.getServer();
-            executeNext(server.dispatchCommand(server.getConsoleSender(), substring) ? null : filledLine,
+            boolean succeeded;
+            try
+            {
+                succeeded = server.dispatchCommand(server.getConsoleSender(), substring);
+            }
+            catch (Exception e)
+            {
+                executeNext(filledLine,
+                        arguments, nextCommands, goOnEvenFailure,
+                        runOnFailure, runOnFailedAndStopped, runOnCompleted);
+                throw e;
+            }
+            executeNext(succeeded ? null : filledLine,
                     arguments, nextCommands, goOnEvenFailure,
                     runOnFailure, runOnFailedAndStopped, runOnCompleted);
             return;

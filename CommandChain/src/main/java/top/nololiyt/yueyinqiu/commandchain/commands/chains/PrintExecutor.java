@@ -56,7 +56,6 @@ public class PrintExecutor extends Executor
             return false;
     
         String chainName = args.get(0);
-    
         MessagesManager messagesManager = plugin.getMessagesManager();
         MessagesSender messagesSender = new MessagesSender(messagesManager,
                 commandSender, new StringPair[]{
